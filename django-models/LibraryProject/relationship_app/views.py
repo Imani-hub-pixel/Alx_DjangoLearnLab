@@ -32,7 +32,7 @@ class CustomLoginView(LoginView):
 class CustomLogoutView(LogoutView):
     template_name = 'relationship_app/logout.html'
 
-def registration_view(request):
+def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():  # Only save if valid
