@@ -1,9 +1,5 @@
 from django.db import models
-
-# Create your models here.
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-
-
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -12,6 +8,7 @@ class CustomUserManager(BaseUserManager):
 
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
+
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -30,16 +27,16 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractUser):
-    username = None  # disable username field
+    username = None  # disable username
     email = models.EmailField(unique=True)
+
     date_of_birth = models.DateField(null=True, blank=True)
-    profile_photo = models.ImageField(upload_to="profile_photos/", null=True, blank=True)
+    profile_photo = models.ImageField(upload_to="profiles/", null=True, blank=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []  # no username field required
+    REQUIRED_FIELDS = []  # email & password already required
 
     objects = CustomUserManager()
 
     def __str__(self):
         return self.email
-
