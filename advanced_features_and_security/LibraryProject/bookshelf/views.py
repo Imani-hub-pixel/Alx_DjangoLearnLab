@@ -13,6 +13,7 @@ from django.db import connection
 from .models import Book
 from .forms import BookSearchForm
 from django.views.decorators.http import require_http_methods
+from .forms import ExampleForm, BookSearchForm
 
 @require_http_methods(["GET"])
 def book_list(request):
