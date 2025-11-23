@@ -1,0 +1,26 @@
+{# bookshelf/templates/bookshelf/book_list.html #}
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Books</title>
+</head>
+<body>
+  <h1>Books</h1>
+
+  <form method="get" action="{% url 'bookshelf:book_list' %}">
+    {% comment %} Search uses GET; we'll validate in the view. {% endcomment %}
+    <label for="q">Search:</label>
+    <input id="q" name="q" value="{{ request.GET.q|default:''|escape }}">
+    <button type="submit">Search</button>
+  </form>
+
+  <ul>
+    {% for book in books %}
+      <li>{{ book.title }} — {{ book.author }}</li>
+    {% empty %}
+      <li>No books found.</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
