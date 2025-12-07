@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from rest_framework import generics,permissions
+from rest_framework.permissions import IsAuthenticatedOrReadOnly,IsAuthenticated
+from rest_framework import generics
 from .models import Book,Author
 from .serializers import BookSerializer
 
@@ -8,16 +9,16 @@ from .serializers import BookSerializer
 class BookListView(generics.ListAPIView):
     queryset=Book.objects.all()
     serializer_class=BookSerializer
-    permission_classes=[permissions.AllowAny]
+    permission_classes=[IsAuthenticatedOrReadOnly]
 
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 class BookCreateView(generics.CreateAPIView):
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -25,9 +26,9 @@ class BookCreateView(generics.CreateAPIView):
 class BookUpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
