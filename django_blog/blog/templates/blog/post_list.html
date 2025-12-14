@@ -14,7 +14,7 @@
 {% for post in posts %}
     <h3><a href="/posts/{{ post.pk }}/">{{ post.title }}</a></h3>
     <p>{{ post.content|truncatechars:100 }}</p>
-    <p>By {{ post.author.username }} on {{ post.created_at|date:"M d, Y" }}</p>
+    <p>By {{ post.author.username }} on {{ post.published_at|date:"M d, Y" }}</p>
     <hr>
 {% empty %}
     <p>No posts available.</p>
