@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import  get_user_model
 from .models import Comment,Post
+from taggit.forms import TagWidget
 
 User=get_user_model()
 
@@ -34,6 +35,7 @@ class PostForm(forms.ModelForm):
         fields = ["title", "content", "tags"]
         widgets = {
             "content": forms.Textarea(attrs={"rows": 5}),
+            "tags":TagWidget(),
         }
     
         
