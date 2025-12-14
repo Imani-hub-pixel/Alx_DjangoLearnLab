@@ -14,9 +14,6 @@ class RegisterForm(UserCreationForm):
 
 
 class CommentForm(forms.ModelForm):
-    class Meta:
-        model=Comment
-        fields=["content"]
     content = forms.CharField(
         label="",
         widget=forms.Textarea(attrs={
@@ -26,8 +23,9 @@ class CommentForm(forms.ModelForm):
         max_length=1000,
         required=True
     )
-    class Meta:
-        model=Comment
-        fields=["content"]
 
+    class Meta:
+        model = Comment  
+        fields = ["content"]
+    
         
