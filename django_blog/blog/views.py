@@ -129,9 +129,12 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = CommentForm
     template_name = "blog/comment_form.html"
 
-    def test_func(self):
-        comment = self.get_object()
-        return self.request.user == comment.author
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        from .models import Post
+        post_id = self.kwargs.get("post_id")
+        form.instance.post = Post.objects.get(pk=post_id)
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy("post_detail", kwargs={"pk": self.object.post.pk})
