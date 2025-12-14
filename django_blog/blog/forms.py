@@ -12,8 +12,8 @@ class RegisterForm(UserCreationForm):
         model=User
         fields=["username","email","password1","password2"]
 
+
 class CommentForm(forms.ModelForm):
-   class CommentForm(forms.ModelForm):
     content = forms.CharField(
         label="",
         widget=forms.Textarea(attrs={
