@@ -9,7 +9,7 @@ from .views import (
 
 urlpatterns = [
 # Comments
-path("post/int:pk>/comments/new", CommentCreateView.as_view(), name="comment_create"),
+path("posts/int:post_id>/comments/new", CommentCreateView.as_view(), name="comment_create"),
 path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="comment_update"),
 path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment_delete"),
 
