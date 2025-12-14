@@ -163,7 +163,7 @@ class PostSearchView(ListView):
 
 
 
-class PostByTagView(ListView):
+class PostByTagListView(ListView):
     model = Post
     template_name = "blog/posts_by_tag.html"  # template to render
     context_object_name = "posts"
