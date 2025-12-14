@@ -1,0 +1,23 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block title %}All Posts{% endblock %}
+{% block content %}
+
+<h2>All Posts</h2>
+
+{% if user.is_authenticated %}
+    <a href="/posts/new/">Create New Post</a>
+{% endif %}
+
+<hr>
+
+{% for post in posts %}
+    <h3><a href="/posts/{{ post.pk }}/">{{ post.title }}</a></h3>
+    <p>{{ post.content|truncatechars:100 }}</p>
+    <p>By {{ post.author.username }} on {{ post.created_at|date:"M d, Y" }}</p>
+    <hr>
+{% empty %}
+    <p>No posts available.</p>
+{% endfor %}
+
+{% endblock %}

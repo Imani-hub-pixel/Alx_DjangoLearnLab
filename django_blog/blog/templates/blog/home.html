@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome to Django Blog!</h1>
+    <p>This is your blogging platform. You can create posts, view them, and manage your profile.</p>
+
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user.username }}! <a href="{% url 'profile' %}">Go to your profile</a></p>
+        <a href="{% url 'post_create' %}" class="btn btn-primary">Create a New Post</a>
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a> to ge
