@@ -20,8 +20,12 @@
     </header>
 
     <div class="content">
+        <form method="GET" action="{% url 'post_search' %}">
+        <input type="text" name="q" placeholder="Search posts" required>
+        <button type="submit">Search</button>
+        </form>
         {% block content %}
-        <!-- Page-specific content goes here -->
+        
         {% endblock %}
     </div>
 

@@ -52,6 +52,14 @@
     <a href="{% url 'comment_edit' comment.pk %}">Edit</a>
     <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
 {% endif %}
+<p>Tags:
+{% for tag in post.tags.all %}
+    <a href="{% url 'posts_by_tag' tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+{% empty %}
+    No tags
+{% endfor %}
+</p>
+
 
 <a href="/">Back to all posts</a>
 

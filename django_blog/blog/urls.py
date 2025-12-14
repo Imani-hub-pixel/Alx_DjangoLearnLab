@@ -2,16 +2,20 @@ from django.urls import path
 from .views import (
     PostListView, PostDetailView, PostCreateView,
     PostUpdateView, PostDeleteView,CommentCreateView, CommentUpdateView,
-    CommentDeleteView,
+    CommentDeleteView,PostSearchView, PostByTagView,
     
     login_view, logout_view, register_view, profile_view, edit_profile_view,home_view,
 )
 
 urlpatterns = [
-# Comments
-path("post/<int:pk>/comments/new/", CommentCreateView.as_view(), name="comment_create"),
-path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="comment_update"),
-path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment_delete"),
+
+    #seacrh and tags
+    path("search/", PostSearchView.as_view(), name="post_search"),
+    path("tags/<str:tag_name>/", PostByTagView.as_view(), name="posts_by_tag"),
+    #comments urls
+    path("post/<int:pk>/comments/new/", CommentCreateView.as_view(), name="comment_create"),
+    path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="comment_update"),
+    path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment_delete"),
 
 
     path("", PostListView.as_view(), name="posts"),
