@@ -48,6 +48,10 @@
 {% else %}
     <p><a href="{% url 'login' %}">Login</a> to add a comment.</p>
 {% endif %}
+{% if user == comment.author %}
+    <a href="{% url 'comment_edit' comment.pk %}">Edit</a>
+    <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
+{% endif %}
 
 <a href="/">Back to all posts</a>
 
