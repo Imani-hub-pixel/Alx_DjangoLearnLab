@@ -9,6 +9,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Post,Comment
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
+from django.http import Http404
 # Create your views here.
 from django.shortcuts import render
 
@@ -67,6 +68,24 @@ class PostListView(ListView):
     context_object_name="posts"
     ordering=["-published_date"]
     paginate_by=5
+
+    def get_queryset(self):
+        queryset = Post.objects.all()
+
+        category = self.request.GET.get("category")
+        author = self.request.GET.get("author")
+
+        if category:
+            queryset = queryset.filter(category__name__iexact=category)
+
+        if author:
+            queryset = queryset.filter(author__username__iexact=author)
+
+        return queryset
+
+    def get_ordering(self):
+        ordering = self.request.GET.get("ordering")
+        return ordering if ordering else "-published_date"
 
 class PostDetailView(DetailView):
     model=Post
@@ -176,3 +195,13 @@ class PostByTagListView(ListView):
         context = super().get_context_data(**kwargs)
         context["tag_name"] = self.kwargs.get("tag_name")
         return context
+
+
+def get_queryset(self):
+    queryset = Post.objects.all()
+
+    category = self.request.GET.get("category")
+    if category and not queryset.filter(category__name__iexact=category).exists():
+        raise Http404("Category not found")
+
+    return queryset
