@@ -92,6 +92,11 @@ class PostDetailView(DetailView):
     template_name="blog/post_detail.html"
     context_object_name="post"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()  
+        return context
+
 class PostCreateView(LoginRequiredMixin,CreateView):
     model=Post
     template_name="blog/post_form.html"
@@ -114,6 +119,9 @@ class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
         messages.success(self.request, "Post updated successfully")
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'pk': self.object.pk})
+
     def test_func(self):
         post=self.get_object()
         if self.request.user==post.author:
@@ -134,11 +142,9 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     template_name = "blog/comment_form.html"
 
     def form_valid(self, form):
-        # Set the author and post
         form.instance.author = self.request.user
-        post_pk = self.kwargs.get("pk")  # post id passed in URL
-        from .models import Post
-        form.instance.post = Post.objects.get(pk=post_pk)
+        post = get_object_or_404(Post, pk=self.kwargs["pk"])
+        form.instance.post = post
         return super().form_valid(form)
 
     def get_success_url(self):

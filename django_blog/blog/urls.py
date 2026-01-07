@@ -11,7 +11,7 @@ urlpatterns = [
 
     #seacrh and tags
     path("search/", PostSearchView.as_view(), name="post_search"),
-    path("tags/<slug:tag_slug>/", PostByTagListView.as_view(), name="posts_by_tag"),
+    path("tags/<slug:tag_name>/", PostByTagListView.as_view(), name="posts_by_tag"),
     #comments urls
     path("post/<int:pk>/comments/new/", CommentCreateView.as_view(), name="comment_create"),
     path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="comment_update"),

@@ -10,8 +10,8 @@
 <hr>
 
 {% if user == post.author %}
-    <a href="/posts/{{ post.pk }}/update/">Edit</a> |
-    <a href="/posts/{{ post.pk }}/delete/">Delete</a>
+    <a href="/post/{{ post.pk }}/update/">Edit</a> |
+    <a href="/post/{{ post.pk }}/delete/">Delete</a>
 {% endif %}
 
 
@@ -26,7 +26,7 @@
             <small>{{ comment.created_at|date:"M d, Y H:i" }}</small>
             {% if user == comment.author %}
                 <p>
-                    <a href="{% url 'comment_edit' comment.pk %}">Edit</a> |
+                    <a href="{% url 'comment_update' comment.pk %}">Edit</a> |
                     <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
                 </p>
             {% endif %}
@@ -40,7 +40,7 @@
 <a href="/">Back to all posts</a>
 {% if user.is_authenticated %}
     <h4>Add a Comment</h4>
-    <form method="POST" action="{% url 'comment_add' post.pk %}">
+    <form method="POST" action="{% url 'comment_create' post.pk %}">
         {% csrf_token %}
         {{ comment_form.as_p }}
         <button type="submit" class="btn btn-primary">Submit Comment</button>
@@ -49,7 +49,7 @@
     <p><a href="{% url 'login' %}">Login</a> to add a comment.</p>
 {% endif %}
 {% if user == comment.author %}
-    <a href="{% url 'comment_edit' comment.pk %}">Edit</a>
+    <a href="{% url 'comment_update' comment.pk %}">Edit</a>
     <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
 {% endif %}
 <p>Tags:
